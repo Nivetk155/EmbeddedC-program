@@ -1,0 +1,35 @@
+2) Write an ECP to blink alternate LEDs using LPC2129 Microcontroller ?
+ Iterate1 :
+ LED1 ON 
+LED2 OFF 
+Iterate2 :
+ LED1 OFF
+ LED2 ON 
+
+
+#include<lpc21xx.h>
+#define led0 1<<0
+#define led1 1<<1
+void delay(int ms)
+{
+T0PR=15000-1;
+T0TCR=0x01;
+while(T0TC<ms);
+T0TCR=0x03;
+T0TCR=0x00;
+}
+int main()
+{
+int i;
+IODIR0=led0|led1;
+while(1)
+{
+IOSET0=led0;
+IOCLR0=led1;
+delay(500);
+IOCLR0=led0;
+IOSET0=led1;
+delay(500);
+}
+}
+
